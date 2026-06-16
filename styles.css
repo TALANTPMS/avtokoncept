@@ -191,6 +191,20 @@ body {
   box-shadow: 0 28px 70px #000;
 }
 
+.hero__title {
+  position: absolute;
+  inset: auto 4.5vw 9vh;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.09);
+  font-family: "Prata", serif;
+  font-size: clamp(54px, 10.8vw, 176px);
+  line-height: 0.78;
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+}
+
 .scroll-hint {
   position: absolute;
   right: clamp(24px, 5vw, 80px);
@@ -265,6 +279,68 @@ body {
     linear-gradient(90deg, rgba(17, 27, 50, 0.032) 1px, transparent 1px);
   background-size: auto, auto, 92px 92px, 92px 92px;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.32) 55%, rgba(0, 0, 0, 0.62));
+}
+
+.second-screen__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-self: start;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.second-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #2455a6;
+  font-size: clamp(11px, 1vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.second-brand__mark {
+  display: grid;
+  width: clamp(38px, 3.5vw, 52px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1.5px solid #2455a6;
+  border-radius: 50%;
+  font-size: clamp(14px, 1.25vw, 19px);
+  letter-spacing: -0.04em;
+}
+
+.second-screen__cta {
+  display: inline-flex;
+  min-width: clamp(138px, 12vw, 184px);
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3b68bb;
+  border-radius: 6px;
+  color: #2455a6;
+  font-size: clamp(10px, 0.9vw, 13px);
+  font-weight: 400;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.second-screen__cta:hover {
+  color: var(--paper);
+  background: #2455a6;
+}
+
+.second-screen__eyebrow {
+  align-self: start;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
 }
 
 .second-screen__content {
@@ -411,6 +487,34 @@ body {
   backface-visibility: hidden;
   filter: contrast(1.04) saturate(0.88);
   transform: translateZ(0);
+}
+
+.third-screen__label {
+  position: absolute;
+  inset: clamp(26px, 4vw, 58px) clamp(24px, 5vw, 80px) auto;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.third-screen__caption {
+  position: absolute;
+  bottom: clamp(34px, 6vh, 72px);
+  left: clamp(24px, 5vw, 80px);
+  z-index: 4;
+}
+
+.third-screen__caption p {
+  margin: 0;
+  color: #f4f1e9;
+  font-family: "Prata", serif;
+  font-size: clamp(30px, 3.4vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
 }
 
 .third-screen__market {
@@ -794,6 +898,22 @@ body {
     padding: 24px 20px 42px;
   }
 
+  .second-brand {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .second-brand__mark {
+    width: 34px;
+    font-size: 12px;
+  }
+
+  .second-screen__cta {
+    min-width: 108px;
+    min-height: 34px;
+    font-size: 9px;
+  }
+
   .second-screen__content {
     align-self: start;
     width: 100%;
@@ -856,6 +976,19 @@ body {
     object-fit: contain;
     background: #050505;
     transform: translate(-50%, -50%) translateZ(0);
+  }
+
+  .third-screen__label {
+    inset: 20px 20px auto;
+  }
+
+  .third-screen__caption {
+    bottom: 72px;
+    left: 20px;
+  }
+
+  .third-screen__caption p {
+    font-size: clamp(25px, 7.5vw, 32px);
   }
 
   .third-screen__market {
@@ -1011,7 +1144,7 @@ body {
   }
 }
 
-@media (min-width: 721px) and (max-width: 1440px) {
+@media (max-width: 1440px) {
   .scroll-stage,
   .scroll-stage--third {
     height: 200svh;
