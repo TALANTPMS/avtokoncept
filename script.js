@@ -3,7 +3,8 @@ const fallback = document.querySelector("[data-video-fallback]");
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 const seekThreshold = isTouchDevice ? 1 / 30 : 1 / 60;
-const seekInterval = isTouchDevice ? 48 : 24;
+const seekInterval = isTouchDevice ? 90 : 24;
+const leadEmail = "info@autokoncept.ru";
 let animationFrame = 0;
 
 const scenes = [...document.querySelectorAll("[data-scroll-stage]")].map((stage) => {
@@ -73,7 +74,7 @@ function settleSeek(scene) {
     scene.video.currentTime = scene.targetTime;
   } catch {}
 
-  scene.settleTimer = window.setTimeout(() => settleSeek(scene), 120);
+  scene.settleTimer = window.setTimeout(() => settleSeek(scene), 400);
 }
 
 scenes.forEach((scene, index) => {
@@ -90,18 +91,8 @@ scenes.forEach((scene, index) => {
   };
 
   const primeDecoder = () => {
-    const playAttempt = video.play();
-
-    if (playAttempt) {
-      playAttempt
-        .then(() => {
-          video.pause();
-          updateProgress();
-        })
-        .catch(() => {
-          video.pause();
-        });
-    }
+    video.load();
+    updateProgress();
   };
 
   video.addEventListener("durationchange", initialize);
@@ -155,7 +146,7 @@ function updateProgress() {
       );
       seekToTarget(scene);
       window.clearTimeout(scene.settleTimer);
-      scene.settleTimer = window.setTimeout(() => settleSeek(scene), 120);
+      scene.settleTimer = window.setTimeout(() => settleSeek(scene), 400);
     }
   });
 }
@@ -175,6 +166,29 @@ window.addEventListener("scroll", scheduleUpdate, { passive: true });
 window.addEventListener("resize", scheduleUpdate, { passive: true });
 window.visualViewport?.addEventListener("resize", scheduleUpdate, {
   passive: true,
+});
+
+[...document.querySelectorAll(".lead-form, .fourth-form")].forEach((form) => {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const subject = encodeURIComponent("Заявка AUTOKONCEPT");
+    const body = encodeURIComponent(
+      [`Имя: ${name || "не указано"}`, `Телефон: ${phone || "не указан"}`].join(
+        "\n",
+      ),
+    );
+    const button = form.querySelector("button");
+
+    if (button) {
+      button.textContent = "Заявка готова";
+    }
+
+    window.location.href = `mailto:${leadEmail}?subject=${subject}&body=${body}`;
+  });
 });
 
 updateProgress();
