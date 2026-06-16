@@ -2,8 +2,10 @@ const fallback = document.querySelector("[data-video-fallback]");
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-const seekThreshold = isTouchDevice ? 1 / 30 : 1 / 60;
-const seekInterval = isTouchDevice ? 48 : 24;
+const seekThreshold = isTouchDevice ? 0.12 : 1 / 60;
+const seekInterval = isTouchDevice ? 160 : 24;
+const settleDelay = isTouchDevice ? 700 : 400;
+const leadEmail = "info@autokoncept.ru";
 let animationFrame = 0;
 
 const scenes = [...document.querySelectorAll("[data-scroll-stage]")].map((stage) => {
@@ -31,17 +33,23 @@ function queueSeek(scene, delay) {
   }, delay);
 }
 
-function seekToTarget(scene) {
+function seekToTarget(scene, force = false) {
+  const threshold = force ? 0.025 : seekThreshold;
+
   if (
     !scene.duration ||
     scene.video.readyState < 2 ||
-    Math.abs(scene.video.currentTime - scene.targetTime) < seekThreshold
+    Math.abs(scene.video.currentTime - scene.targetTime) < threshold
   ) {
     return;
   }
 
   if (scene.video.seeking === true) {
-    queueSeek(scene, seekInterval);
+    if (force) {
+      queueSeek(scene, settleDelay);
+    } else {
+      queueSeek(scene, seekInterval);
+    }
     return;
   }
 
@@ -64,16 +72,16 @@ function settleSeek(scene) {
   if (
     !scene.duration ||
     scene.video.readyState < 2 ||
-    Math.abs(scene.video.currentTime - scene.targetTime) < seekThreshold
+    Math.abs(scene.video.currentTime - scene.targetTime) < 0.025
   ) {
     return;
   }
 
-  try {
-    scene.video.currentTime = scene.targetTime;
-  } catch {}
+  seekToTarget(scene, true);
 
-  scene.settleTimer = window.setTimeout(() => settleSeek(scene), 120);
+  if (!isTouchDevice) {
+    scene.settleTimer = window.setTimeout(() => settleSeek(scene), settleDelay);
+  }
 }
 
 scenes.forEach((scene, index) => {
@@ -90,25 +98,17 @@ scenes.forEach((scene, index) => {
   };
 
   const primeDecoder = () => {
-    const playAttempt = video.play();
-
-    if (playAttempt) {
-      playAttempt
-        .then(() => {
-          video.pause();
-          updateProgress();
-        })
-        .catch(() => {
-          video.pause();
-        });
-    }
+    video.load();
+    updateProgress();
   };
 
   video.addEventListener("durationchange", initialize);
   video.addEventListener("loadeddata", updateProgress);
   video.addEventListener("canplay", primeDecoder, { once: true });
   video.addEventListener("seeked", () => {
-    window.requestAnimationFrame(() => seekToTarget(scene));
+    if (!isTouchDevice) {
+      window.requestAnimationFrame(() => seekToTarget(scene));
+    }
   });
   video.addEventListener("error", () => {
     if (index === 0 && fallback) {
@@ -155,7 +155,7 @@ function updateProgress() {
       );
       seekToTarget(scene);
       window.clearTimeout(scene.settleTimer);
-      scene.settleTimer = window.setTimeout(() => settleSeek(scene), 120);
+      scene.settleTimer = window.setTimeout(() => settleSeek(scene), settleDelay);
     }
   });
 }
@@ -175,6 +175,29 @@ window.addEventListener("scroll", scheduleUpdate, { passive: true });
 window.addEventListener("resize", scheduleUpdate, { passive: true });
 window.visualViewport?.addEventListener("resize", scheduleUpdate, {
   passive: true,
+});
+
+[...document.querySelectorAll(".lead-form, .fourth-form")].forEach((form) => {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const subject = encodeURIComponent("Заявка AUTOKONCEPT");
+    const body = encodeURIComponent(
+      [`Имя: ${name || "не указано"}`, `Телефон: ${phone || "не указан"}`].join(
+        "\n",
+      ),
+    );
+    const button = form.querySelector("button");
+
+    if (button) {
+      button.textContent = "Заявка готова";
+    }
+
+    window.location.href = `mailto:${leadEmail}?subject=${subject}&body=${body}`;
+  });
 });
 
 updateProgress();
