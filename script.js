@@ -1,12 +1,57 @@
 const fallback = document.querySelector("[data-video-fallback]");
+const preloader = document.querySelector("[data-preloader]");
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-const seekThreshold = isTouchDevice ? 0.12 : 1 / 60;
-const seekInterval = isTouchDevice ? 160 : 24;
-const settleDelay = isTouchDevice ? 700 : 400;
+const seekThreshold = isTouchDevice ? 0.04 : 1 / 60;
+const seekInterval = isTouchDevice ? 70 : 24;
+const settleDelay = isTouchDevice ? 520 : 400;
+const mobileSeekStep = 0.16;
 const leadEmail = "info@autokoncept.ru";
 let animationFrame = 0;
+
+function waitForElementLoad(element) {
+  if (element.tagName === "IMG") {
+    return element.complete
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          element.addEventListener("load", resolve, { once: true });
+          element.addEventListener("error", resolve, { once: true });
+        });
+  }
+
+  if (element.tagName === "VIDEO") {
+    return element.readyState >= 1
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          element.addEventListener("loadedmetadata", resolve, { once: true });
+          element.addEventListener("error", resolve, { once: true });
+        });
+  }
+
+  return Promise.resolve();
+}
+
+async function revealSite() {
+  const media = [...document.querySelectorAll("img, video")];
+  const fontsReady = document.fonts?.ready || Promise.resolve();
+  const minDelay = new Promise((resolve) => window.setTimeout(resolve, 900));
+  const maxDelay = new Promise((resolve) => window.setTimeout(resolve, 4200));
+  const assetsReady = Promise.all([
+    fontsReady,
+    ...media.map((element) => waitForElementLoad(element)),
+  ]);
+
+  await Promise.all([minDelay, Promise.race([assetsReady, maxDelay])]);
+
+  document.body.classList.remove("is-loading");
+  document.body.classList.add("is-ready");
+  updateProgress();
+
+  window.setTimeout(() => {
+    preloader?.remove();
+  }, 1300);
+}
 
 const scenes = [...document.querySelectorAll("[data-scroll-stage]")].map((stage) => {
   const video = stage.querySelector("[data-scroll-video]");
@@ -35,11 +80,12 @@ function queueSeek(scene, delay) {
 
 function seekToTarget(scene, force = false) {
   const threshold = force ? 0.025 : seekThreshold;
+  const delta = scene.targetTime - scene.video.currentTime;
 
   if (
     !scene.duration ||
     scene.video.readyState < 2 ||
-    Math.abs(scene.video.currentTime - scene.targetTime) < threshold
+    Math.abs(delta) < threshold
   ) {
     return;
   }
@@ -62,7 +108,12 @@ function seekToTarget(scene, force = false) {
 
   try {
     scene.lastSeekAt = performance.now();
-    scene.video.currentTime = scene.targetTime;
+    const nextTime =
+      isTouchDevice && !force
+        ? scene.video.currentTime +
+          clamp(delta * 0.45, -mobileSeekStep, mobileSeekStep)
+        : scene.targetTime;
+    scene.video.currentTime = clamp(nextTime, 0, scene.duration);
   } catch {}
 }
 
@@ -201,3 +252,4 @@ window.visualViewport?.addEventListener("resize", scheduleUpdate, {
 });
 
 updateProgress();
+revealSite();

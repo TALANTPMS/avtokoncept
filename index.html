@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#080808" />
-    <title>Noir Van — Scroll Experience</title>
-    <link rel="stylesheet" href="./styles.css?v=21" />
+    <title>AUTOKONCEPT - Франшиза компании по аренде автомобилей для бизнеса</title>
+    <link rel="stylesheet" href="./styles.css?v=25" />
   </head>
-  <body>
+  <body class="is-loading">
+    <div class="preloader" data-preloader aria-live="polite">
+      <div class="preloader__panel preloader__panel--top" aria-hidden="true"></div>
+      <div class="preloader__panel preloader__panel--bottom" aria-hidden="true"></div>
+      <div class="preloader__content">
+        <img
+          class="preloader__mark"
+          src="./assets/autokoncept-mark.png?v=4"
+          alt=""
+        />
+        <img
+          class="preloader__wordmark"
+          src="./assets/autokoncept-wordmark.png?v=4"
+          alt="AUTOKONCEPT"
+        />
+        <div class="preloader__line" aria-hidden="true">
+          <span></span>
+        </div>
+      </div>
+    </div>
+
     <main>
       <div class="scroll-stage" data-scroll-stage>
         <section class="hero" aria-label="Автомобиль на вращающемся подиуме">
@@ -219,6 +239,6 @@
       </div>
     </main>
 
-    <script src="./script.js?v=21"></script>
+    <script src="./script.js?v=25"></script>
   </body>
 </html>
