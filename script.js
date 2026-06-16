@@ -4,9 +4,9 @@ const preloader = document.querySelector("[data-preloader]");
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 const seekThreshold = isTouchDevice ? 0.04 : 1 / 60;
-const seekInterval = isTouchDevice ? 70 : 24;
+const seekInterval = isTouchDevice ? 48 : 24;
 const settleDelay = isTouchDevice ? 520 : 400;
-const mobileSeekStep = 0.16;
+const mobileSeekStep = 0.24;
 const leadEmail = "info@autokoncept.ru";
 let animationFrame = 0;
 

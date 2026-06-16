@@ -64,12 +64,10 @@ body.is-loading {
 
 .preloader__panel--top {
   top: 0;
-  border-bottom: 1px solid rgba(220, 238, 255, 0.15);
 }
 
 .preloader__panel--bottom {
   bottom: 0;
-  border-top: 1px solid rgba(220, 238, 255, 0.15);
 }
 
 .preloader__content {
@@ -95,23 +93,6 @@ body.is-loading {
   width: clamp(150px, 18vw, 230px);
   height: auto;
   object-fit: contain;
-}
-
-.preloader__line {
-  width: min(100%, 260px);
-  height: 1px;
-  margin-top: 4px;
-  overflow: hidden;
-  background: rgba(220, 238, 255, 0.2);
-}
-
-.preloader__line span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--acid);
-  transform: translateX(-100%);
-  animation: preloader-line 1.25s ease-in-out infinite;
 }
 
 .preloader p {
@@ -361,17 +342,8 @@ body.is-ready .preloader__content {
 }
 
 .second-screen::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 20;
-  width: 100%;
-  height: 6px;
-  content: "";
-  pointer-events: none;
-  background: #1747a7;
-  transform: scaleX(var(--progress));
-  transform-origin: left center;
+  display: none;
+  content: none;
 }
 
 .second-screen::after {
@@ -786,17 +758,6 @@ body.is-ready .preloader__content {
   55%,
   100% {
     transform: translateX(105%);
-  }
-}
-
-@keyframes preloader-line {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  52%,
-  100% {
-    transform: translateX(100%);
   }
 }
 
@@ -1288,11 +1249,6 @@ body.is-ready .preloader__content {
   .preloader__panel,
   .preloader__content {
     transition-duration: 1ms;
-  }
-
-  .preloader__line span {
-    animation: none;
-    transform: none;
   }
 
   .scroll-hint__line::after {
