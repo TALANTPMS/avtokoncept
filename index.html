@@ -1,251 +1,239 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#080808" />
-    <title>AUTOKONCEPT - Франшиза компании по аренде автомобилей для бизнеса</title>
-    <link rel="stylesheet" href="./styles.css?v=27" />
-  </head>
-  <body class="is-loading">
-    <div class="preloader" data-preloader aria-live="polite">
-      <div class="preloader__panel preloader__panel--top" aria-hidden="true"></div>
-      <div class="preloader__panel preloader__panel--bottom" aria-hidden="true"></div>
-      <div class="preloader__content">
-        <img
-          class="preloader__mark"
-          src="./assets/autokoncept-mark.png?v=4"
-          alt=""
-        />
-        <img
-          class="preloader__wordmark"
-          src="./assets/autokoncept-wordmark.png?v=4"
-          alt="AUTOKONCEPT"
-        />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Франшиза комиссионного магазина ЕКМ">
+  <title>ЕКМ — франшиза комиссионного магазина</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__visual" aria-hidden="true"></div>
+      <div class="hero__fade" aria-hidden="true"></div>
+      <div class="hero__man-track" aria-hidden="true">
+        <img class="hero__man" src="assets/figma-man-hires-retouched.png?v=5" alt="">
       </div>
-    </div>
+      <header class="header container">
+        <a class="brand" href="#top" aria-label="ЕКМ — на главную">
+          <img src="assets/figma-logo.jpg" alt="">
+          <span><strong>ЕКМ</strong><small>Франшиза комиссионного магазина</small></span>
+        </a>
+        <a class="button button--small" href="#contact">Обратная связь</a>
+      </header>
 
-    <main>
-      <div class="scroll-stage" data-scroll-stage>
-        <section class="hero" aria-label="Автомобиль на вращающемся подиуме">
-          <header class="hero__header">
-            <a class="brand" href="#" aria-label="Автоконцепт — на главную">
-              <img
-                class="brand__mark"
-                src="./assets/autokoncept-mark.png?v=4"
-                alt=""
-              />
-              <img
-                class="brand__wordmark"
-                src="./assets/autokoncept-wordmark.png?v=4"
-                alt="AUTOKONCEPT"
-              />
-            </a>
-
-            <a class="hero__cta" href="#contact">Заказать звонок</a>
-          </header>
-
-          <div class="hero__copy">
-            <h1>
-              Франшиза компании<br />
-              <span>по аренде</span> автомобилей<br />
-              для бизнеса
-            </h1>
-            <span class="hero__copy-line" aria-hidden="true"></span>
+      <div class="hero__content container">
+        <div class="offer reveal">
+          <span class="offer__dash"></span>
+          <h1>
+            <span><em>Зарабатывайте</em></span>
+            <span>от 340 000 ₽ в месяц,</span>
+            <span>открыв комиссионный</span>
+            <span>магазин по франшизе <em>«ЕКМ»</em></span>
+          </h1>
+          <div class="offer__promise">
+            <span class="promise-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32" focusable="false">
+                <path d="M19.1 5.8c2.7-1.7 5.6-1.8 7.1-1.7.1 1.6 0 4.5-1.7 7.2l-6.2 9.4-6.5-6.5 7.3-8.4Z"/>
+                <path d="m13.3 12.5-5.1.5-3.1 3.1 6.2 1.3m8.2 2.1-1 5.2-3.1 3.1-1.3-6.2"/>
+                <circle cx="21.5" cy="9.3" r="2.3"/>
+                <path d="M10.8 21.2c-1.8.3-3.9 1.7-5 4.9 3.2-1.1 4.6-3.2 4.9-5"/>
+              </svg>
+            </span>
+            <p>Берем дорого. Продаем выгодно.<br>Запуск за 42 дня</p>
           </div>
 
-          <div class="hero__media">
-            <video
-              class="hero-video"
-              data-scroll-video
-              preload="auto"
-              muted
-              playsinline
-              disablepictureinpicture
-              aria-label="Чёрный минивэн вращается на подиуме"
-            >
-              <source
-                src="./assets/minivan-turntable-mobile.mp4?v=1"
-                type="video/mp4"
-                media="(max-width: 720px)"
-              />
-              <source src="./assets/minivan-turntable.mp4" type="video/mp4" />
-            </video>
+          <div class="offer__bottom">
+            <form class="lead-form" data-form>
+              <label><span>Ваше имя</span><input name="name" type="text" placeholder="Имя" required></label>
+              <label><span>Телефон</span><input name="phone" type="tel" placeholder="Телефон" required></label>
+              <button class="button" type="submit">Получить</button>
+              <p class="form-status" aria-live="polite"></p>
+            </form>
 
-            <div class="hero__fallback" data-video-fallback aria-hidden="true">
-              <div class="hero__platform"></div>
-              <p>Добавьте видео в<br /><strong>assets/minivan-turntable.mp4</strong></p>
+            <div class="present">
+              <div class="present__art">
+                <span class="present__circle present__circle--large"></span>
+                <span class="present__circle present__circle--small"></span>
+                <img src="assets/figma-laptop.png" alt="Финансовая модель франшизы ЕКМ на ноутбуке">
+              </div>
+              <p><strong>Получите</strong><br>презентацию франшизы<br>и финансовую модель</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="scroll-hint" aria-hidden="true">
-            <span class="scroll-hint__line"></span>
-            <span>Scroll</span>
+    <section class="business">
+      <div class="dot-field dot-field--left" aria-hidden="true"></div>
+      <div class="dot-field dot-field--right" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-heading reveal">
+          <h2><span>Комиссионный магазин</span> <span>«ЕКМ» — бизнес,</span></h2>
+          <span>который не знает кризисов</span>
+        </div>
+
+        <div class="business__grid">
+          <article class="fact fact--one reveal">
+            <p><strong>Люди продают и покупают<br>в любое время.</strong> Гаджеты устаревают, инструмент нужен раз в год, сломанные телефоны лежат в ящике. Одни хотят продать — другие купить дешевле нового. Оба потока идут в ваш магазин независимо от сезона и экономической ситуации.</p>
+          </article>
+
+          <article class="fact fact--two reveal">
+            <p><strong>Три источника выручки в одной точке.</strong> Продажа б/у и нового товара, прокат электро- и бензоинструмента, ремонт телефонов и ноутбуков. Вместе они дают стабильную выручку.</p>
+          </article>
+
+          <div class="business__photo reveal">
+            <img class="business__main-photo" src="assets/figma-store.jpg" alt="Комиссионный магазин ЕКМ">
+            <img class="business__people-photo" src="assets/figma-people.jpg" alt="Работа с покупателями">
+            <img class="business__logo" src="assets/figma-logo.jpg" alt="ЕКМ">
+            <span class="ring ring--large"></span>
+            <span class="ring ring--small"></span>
           </div>
-        </section>
 
-        <section class="second-screen">
-          <div class="second-screen__content">
-            <h2>
-              Зарабатывайте<br />
-              от 430 000 рублей в&nbsp;месяц<br />
-              на аренде автомобилей<br />
-              для бизнеса
-            </h2>
-            <span class="second-screen__rule" aria-hidden="true"></span>
-            <p>Получите презентацию франшизы и финансовую модель</p>
-            <form
-              class="lead-form"
-              id="contact"
-              action="mailto:info@autokoncept.ru"
-              method="post"
-              enctype="text/plain"
-            >
-              <div class="lead-form__fields">
-                <label>
-                  <span class="sr-only">Имя</span>
-                  <input type="text" name="name" placeholder="Имя" />
-                </label>
-                <label>
-                  <span class="sr-only">Телефон</span>
-                  <input type="tel" name="phone" placeholder="Телефон" />
-                </label>
+          <article class="fact fact--three reveal">
+            <p><strong>В кризис — еще больше клиентов.</strong> Когда денег меньше, люди не перестают покупать технику — они начинают покупать б/у. Комиссионный магазин в кризис не проседает, а усиливается.</p>
+          </article>
+
+          <article class="fact fact--four reveal">
+            <p><strong>Авито — ваша главная витрина.</strong> Более 100 млн пользователей ежемесячно. Правильно выстроенный профиль дает стабильный поток клиентов с первого дня без дорогой рекламы.</p>
+          </article>
+        </div>
+
+        <a class="scroll-cue" href="#contact" aria-label="Перейти к форме">
+          <span></span><span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact container" id="contact">
+      <div class="contact__card reveal">
+        <p>Хотите узнать, сколько можно зарабатывать <span class="keep-together">в комиссионном бизнесе</span> <span class="keep-together">в вашем городе?</span></p>
+        <h2><em>Получите</em> подробную финансовую модель франшизы ЕКМ</h2>
+        <div class="contact__panel">
+          <img src="assets/store-strip.png" alt="Ассортимент магазина ЕКМ">
+          <form class="lead-form lead-form--wide" data-form>
+            <label><span>Ваше имя</span><input name="name" type="text" placeholder="Ваше имя" required></label>
+            <label><span>Телефон</span><input name="phone" type="tel" placeholder="Телефон" required></label>
+            <button class="button" type="submit">Получить</button>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="numbers-stack" id="numbers" aria-labelledby="numbers-title">
+      <div class="numbers-stack__sticky">
+        <div class="numbers-stack__backdrop" aria-hidden="true"></div>
+        <div class="numbers-stack__stage container">
+          <div class="numbers-stack__heading">
+            <h2 id="numbers-title">Бизнес-модель «ЕКМ»</h2>
+            <span>в цифрах</span>
+          </div>
+
+          <img class="numbers-stack__man" src="assets/figma-third-man.png" alt="" aria-hidden="true">
+
+          <div class="numbers-stack__cards" aria-label="Показатели франшизы">
+            <article class="number-card" data-stack-card>
+              <h3>От 230 000 рублей</h3>
+              <div class="number-card__body">
+                <strong>средняя чистая прибыль</strong>
+                <p>с 5-го месяца</p>
               </div>
-              <button type="submit">Получить</button>
+            </article>
+
+            <article class="number-card" data-stack-card>
+              <h3>От 24%</h3>
+              <div class="number-card__body">
+                <strong>рентабельность</strong>
+                <p>по чистой прибыли</p>
+              </div>
+            </article>
+
+            <article class="number-card" data-stack-card>
+              <h3>42 дня</h3>
+              <div class="number-card__body">
+                <strong>от договора</strong>
+                <p>до открытия</p>
+              </div>
+            </article>
+
+            <article class="number-card" data-stack-card>
+              <h3>1 621 000 рублей</h3>
+              <div class="number-card__body">
+                <strong>инвестиций требуется</strong>
+                <p>для старта</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="numbers-stack__footer">
+            <div class="numbers-stack__model">
+              <span class="numbers-stack__model-circle" aria-hidden="true"></span>
+              <div class="numbers-stack__phone">
+                <img class="numbers-stack__phone-screen" src="assets/figma-third-finance.png" alt="Финансовая модель франшизы ЕКМ">
+                <img class="numbers-stack__phone-frame" src="assets/figma-third-phone.png" alt="" aria-hidden="true">
+              </div>
+              <svg class="numbers-stack__arrow" viewBox="0 0 170 90" aria-hidden="true">
+                <path class="numbers-stack__arrow-line" d="M4 42C27 38 37 23 60 24C87 25 101 43 94 62C87 81 57 79 51 59C45 39 66 26 91 27C119 28 145 42 159 61"/>
+                <path class="numbers-stack__arrow-head" d="m151 57 9 5-2-10"/>
+              </svg>
+            </div>
+
+            <p class="numbers-stack__copy">
+              <strong>Хотите получить детальные расчёты для вашего города?</strong>
+              Скачайте финансовую модель франшизы
+            </p>
+
+            <form class="numbers-stack__form" data-form>
+              <label><span>Ваше имя</span><input name="name" type="text" placeholder="Ваше имя" required></label>
+              <label><span>Телефон</span><input name="phone" type="tel" placeholder="Телефон" required></label>
+              <button class="button" type="submit">Скачать</button>
+              <p class="form-status" aria-live="polite"></p>
             </form>
           </div>
-        </section>
+        </div>
       </div>
+    </section>
 
-      <div class="scroll-stage scroll-stage--third" data-scroll-stage>
-        <section class="third-screen" aria-label="Автомобиль в движении">
-          <video
-            class="third-video"
-            data-scroll-video
-            preload="auto"
-            muted
-            playsinline
-            disablepictureinpicture
-            aria-label="Чёрный минивэн вращается на подиуме"
-          >
-            <source
-              src="./assets/minivan-driving-mobile.mp4?v=1"
-              type="video/mp4"
-              media="(max-width: 720px)"
-            />
-            <source src="./assets/minivan-driving.mp4?v=3" type="video/mp4" />
-          </video>
+    <section class="legacy-about" id="legacy" aria-labelledby="legacy-title">
+      <div class="legacy-about__dots legacy-about__dots--left" aria-hidden="true"></div>
+      <div class="legacy-about__dots legacy-about__dots--right" aria-hidden="true"></div>
+      <div class="legacy-about__content container">
+        <h2 id="legacy-title">
+          <span>За 11 лет — <em>6 магазинов</em></span>
+          <span>с оборотом сети</span>
+          <span>более <em>50 млн рублей</em></span>
+        </h2>
 
-          <p class="third-screen__market">
-            <span>Аренда авто для бизнеса —</span><br />
-            <strong>рынок, который не останавливается</strong>
-          </p>
-
-          <div class="scroll-hint scroll-hint--third" aria-hidden="true">
-            <span class="scroll-hint__line"></span>
-            <span>Scroll</span>
-          </div>
-        </section>
-
-        <section class="fourth-screen">
-          <div class="fourth-screen__content">
-            <div class="fourth-screen__points">
-              <article class="benefit-card">
-                <span class="benefit-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 64 64">
-                    <ellipse cx="27" cy="17" rx="15" ry="7"></ellipse>
-                    <path d="M12 17v20c0 4 7 7 15 7 3 0 6-.4 8-1.3"></path>
-                    <path d="M12 27c0 4 7 7 15 7 3 0 5.5-.4 8-1.2"></path>
-                    <circle cx="43" cy="40" r="12"></circle>
-                    <path d="M43 32v16M39 35h7a4 4 0 0 1 0 8h-7"></path>
-                  </svg>
-                </span>
-                <div>
-                  <h3>Компании платят за аренду, потому что содержать свой автопарк дорого.</h3>
-                  <p>Малый бизнес, госструктуры, частные клиенты — спрос есть всегда.</p>
-                </div>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 64 64">
-                    <circle cx="32" cy="13" r="5"></circle>
-                    <circle cx="15" cy="45" r="5"></circle>
-                    <circle cx="49" cy="45" r="5"></circle>
-                    <path d="M32 18v12M32 30 18 41M32 30l14 11"></path>
-                  </svg>
-                </span>
-                <div>
-                  <h3>B2B, B2G и B2C — три независимых источника выручки.</h3>
-                  <p>Просел один канал — два других держат объёмы.</p>
-                </div>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 64 64">
-                    <path d="M14 42v-7l5-13a5 5 0 0 1 5-3h17a5 5 0 0 1 4 2l7 10 3 2v9"></path>
-                    <path d="M14 42h6M26 42h20M52 42h3M19 31h29M22 31l3-9h15l6 9"></path>
-                    <circle cx="23" cy="42" r="4"></circle>
-                    <circle cx="49" cy="42" r="4"></circle>
-                    <path d="M14 35h5M51 35h4M29 22v9"></path>
-                  </svg>
-                </span>
-                <div>
-                  <h3>Каждый автомобиль в парке — отдельный источник дохода.</h3>
-                  <p>Хотите зарабатывать больше — добавляете машины.</p>
-                </div>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 64 64">
-                    <path d="M32 10c7 5 14 7 19 8v13c0 12-8 20-19 25-11-5-19-13-19-25V18c5-1 12-3 19-8Z"></path>
-                    <path d="m24 33 6 6 11-13"></path>
-                  </svg>
-                </span>
-                <div>
-                  <h3>Клиент не уходит к конкуренту, когда машина сломалась.</h3>
-                  <p>Эвакуатор уже едет, а замена готова. Сервис в критический момент — это стандарт.</p>
-                </div>
-              </article>
-            </div>
-
-            <div class="fourth-screen__lead">
-              <div class="fourth-screen__lead-copy">
-                <h2>
-                  <span>Узнайте, сколько можно зарабатывать</span>
-                  <span>на аренде авто в вашем городе</span>
-                </h2>
-                <p>
-                  <span>Получите подробную финансовую модель</span>
-                  <span>франшизы <strong>AUTOKONCEPT</strong></span>
-                </p>
-              </div>
-              <form
-                class="fourth-form"
-                action="mailto:info@autokoncept.ru"
-                method="post"
-                enctype="text/plain"
-              >
-                <div class="fourth-form__fields">
-                  <label>
-                    <span class="sr-only">Имя</span>
-                    <input type="text" name="name" placeholder="Имя" />
-                  </label>
-                  <label>
-                    <span class="sr-only">Телефон</span>
-                    <input type="tel" name="phone" placeholder="Телефон" />
-                  </label>
-                </div>
-                <button type="submit">Получить</button>
-              </form>
-            </div>
-          </div>
-        </section>
+        <div class="legacy-about__text">
+          <p>Сеть комиссионных магазинов «ЕКМ — Единый Комиссионный Магазин» открылась в 2015 году в Кемеровской области.</p>
+          <p>К 2025 году сеть выросла до 6 точек — от небольших островков до магазинов площадью 170 м².</p>
+          <p>Параллельно основатель Евгений Кутов переехал в Екатеринбург и открыл магазин заново — на новом рынке, с нуля.</p>
+          <p>«ЕКМ» — это стабильная, антикризисная бизнес-модель, имеющая три источника выручки: скупка и продажа б/у, прокат инструмента, ремонт техники.</p>
+          <p>Авито — главный канал без дорогой рекламы и готовая система, проверенная 11 годами реальной работы.</p>
+        </div>
       </div>
-    </main>
+      <div class="legacy-about__carousel" aria-hidden="true">
+        <div class="legacy-about__track">
+          <img class="legacy-about__object legacy-about__object--tv" src="assets/immersive-tv.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--coffee" src="assets/immersive-coffee.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--drill" src="assets/immersive-drill.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--console" src="assets/immersive-console.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--tv" src="assets/immersive-tv.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--coffee" src="assets/immersive-coffee.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--drill" src="assets/immersive-drill.webp" alt="">
+          <img class="legacy-about__object legacy-about__object--console" src="assets/immersive-console.webp" alt="">
+        </div>
+      </div>
+    </section>
 
-    <script src="./script.js?v=27"></script>
-  </body>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite">Спасибо! Мы скоро свяжемся с вами.</div>
+  <script src="script.js"></script>
+</body>
 </html>

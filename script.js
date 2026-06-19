@@ -1,255 +1,173 @@
-const fallback = document.querySelector("[data-video-fallback]");
-const preloader = document.querySelector("[data-preloader]");
+const revealItems = document.querySelectorAll(".reveal");
+const toast = document.querySelector(".toast");
+const hero = document.querySelector(".hero");
+const manTrack = document.querySelector(".hero__man-track");
+const heroVisual = document.querySelector(".hero__visual");
+const heroFade = document.querySelector(".hero__fade");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-const seekThreshold = isTouchDevice ? 0.04 : 1 / 60;
-const seekInterval = isTouchDevice ? 48 : 24;
-const settleDelay = isTouchDevice ? 520 : 400;
-const mobileSeekStep = 0.24;
-const leadEmail = "info@autokoncept.ru";
-let animationFrame = 0;
-
-function waitForElementLoad(element) {
-  if (element.tagName === "IMG") {
-    return element.complete
-      ? Promise.resolve()
-      : new Promise((resolve) => {
-          element.addEventListener("load", resolve, { once: true });
-          element.addEventListener("error", resolve, { once: true });
-        });
-  }
-
-  if (element.tagName === "VIDEO") {
-    return element.readyState >= 1
-      ? Promise.resolve()
-      : new Promise((resolve) => {
-          element.addEventListener("loadedmetadata", resolve, { once: true });
-          element.addEventListener("error", resolve, { once: true });
-        });
-  }
-
-  return Promise.resolve();
-}
-
-async function revealSite() {
-  const media = [...document.querySelectorAll("img, video")];
-  const fontsReady = document.fonts?.ready || Promise.resolve();
-  const minDelay = new Promise((resolve) => window.setTimeout(resolve, 900));
-  const maxDelay = new Promise((resolve) => window.setTimeout(resolve, 4200));
-  const assetsReady = Promise.all([
-    fontsReady,
-    ...media.map((element) => waitForElementLoad(element)),
-  ]);
-
-  await Promise.all([minDelay, Promise.race([assetsReady, maxDelay])]);
-
-  document.body.classList.remove("is-loading");
-  document.body.classList.add("is-ready");
-  updateProgress();
-
-  window.setTimeout(() => {
-    preloader?.remove();
-  }, 1300);
-}
-
-const scenes = [...document.querySelectorAll("[data-scroll-stage]")].map((stage) => {
-  const video = stage.querySelector("[data-scroll-video]");
-  return {
-    stage,
-    video,
-    duration: 0,
-    progress: 0,
-    targetTime: 0,
-    lastSeekAt: 0,
-    seekTimer: 0,
-    settleTimer: 0,
-  };
-});
-
-function queueSeek(scene, delay) {
-  if (scene.seekTimer) {
-    return;
-  }
-
-  scene.seekTimer = window.setTimeout(() => {
-    scene.seekTimer = 0;
-    seekToTarget(scene);
-  }, delay);
-}
-
-function seekToTarget(scene, force = false) {
-  const threshold = force ? 0.025 : seekThreshold;
-  const delta = scene.targetTime - scene.video.currentTime;
-
-  if (
-    !scene.duration ||
-    scene.video.readyState < 2 ||
-    Math.abs(delta) < threshold
-  ) {
-    return;
-  }
-
-  if (scene.video.seeking === true) {
-    if (force) {
-      queueSeek(scene, settleDelay);
-    } else {
-      queueSeek(scene, seekInterval);
-    }
-    return;
-  }
-
-  const elapsed = performance.now() - scene.lastSeekAt;
-
-  if (elapsed < seekInterval) {
-    queueSeek(scene, seekInterval - elapsed);
-    return;
-  }
-
-  try {
-    scene.lastSeekAt = performance.now();
-    const nextTime =
-      isTouchDevice && !force
-        ? scene.video.currentTime +
-          clamp(delta * 0.45, -mobileSeekStep, mobileSeekStep)
-        : scene.targetTime;
-    scene.video.currentTime = clamp(nextTime, 0, scene.duration);
-  } catch {}
-}
-
-function settleSeek(scene) {
-  scene.settleTimer = 0;
-
-  if (
-    !scene.duration ||
-    scene.video.readyState < 2 ||
-    Math.abs(scene.video.currentTime - scene.targetTime) < 0.025
-  ) {
-    return;
-  }
-
-  seekToTarget(scene, true);
-
-  if (!isTouchDevice) {
-    scene.settleTimer = window.setTimeout(() => settleSeek(scene), settleDelay);
-  }
-}
-
-scenes.forEach((scene, index) => {
-  const { video } = scene;
-  const initialize = () => {
-    scene.duration = Number.isFinite(video.duration) ? video.duration : 0;
-    video.pause();
-
-    if (index === 0 && fallback) {
-      fallback.hidden = true;
-    }
-
-    updateProgress();
-  };
-
-  const primeDecoder = () => {
-    video.load();
-    updateProgress();
-  };
-
-  video.addEventListener("durationchange", initialize);
-  video.addEventListener("loadeddata", updateProgress);
-  video.addEventListener("canplay", primeDecoder, { once: true });
-  video.addEventListener("seeked", () => {
-    if (!isTouchDevice) {
-      window.requestAnimationFrame(() => seekToTarget(scene));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
     }
   });
-  video.addEventListener("error", () => {
-    if (index === 0 && fallback) {
-      fallback.hidden = false;
+}, { threshold: 0.12 });
+
+revealItems.forEach((item) => observer.observe(item));
+
+if (hero && !reduceMotion.matches) {
+  let ticking = false;
+
+  const updateHeroMotion = () => {
+    const heroRect = hero.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, -heroRect.top / heroRect.height));
+
+    if (manTrack) {
+      const manShift = progress * 88;
+      manTrack.style.setProperty("--man-scroll-x", `${manShift.toFixed(1)}px`);
     }
-  });
 
-  if (video.readyState >= 1) {
-    initialize();
-  } else {
-    video.addEventListener("loadedmetadata", initialize, { once: true });
-  }
-});
+    if (heroVisual) {
+      const parallaxShift = progress * 62;
+      heroVisual.style.setProperty("--hero-parallax-y", `${parallaxShift.toFixed(1)}px`);
+    }
 
-function updateProgress() {
-  scenes.forEach((scene, index) => {
-    if (!scene.video) {
+    if (heroFade) {
+      const fadeOpacity = 0.08 + progress * 0.92;
+      heroFade.style.setProperty("--hero-fade-opacity", fadeOpacity.toFixed(3));
+    }
+
+    ticking = false;
+  };
+
+  const requestHeroUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateHeroMotion);
+  };
+
+  updateHeroMotion();
+  window.addEventListener("scroll", requestHeroUpdate, { passive: true });
+  window.addEventListener("resize", requestHeroUpdate);
+}
+
+const numbersStack = document.querySelector(".numbers-stack");
+const numbersSticky = numbersStack?.querySelector(".numbers-stack__sticky");
+const numbersMan = numbersStack?.querySelector(".numbers-stack__man");
+const stackCards = Array.from(numbersStack?.querySelectorAll("[data-stack-card]") || []);
+
+if (numbersStack && numbersSticky && stackCards.length && !reduceMotion.matches) {
+  let stackTicking = false;
+  let tabletProgress = 0;
+  let tabletTouchY = 0;
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+  const mix = (from, to, progress) => from + (to - from) * progress;
+  const easeOut = (progress) => 1 - Math.pow(1 - progress, 3);
+  const isTabletStack = () =>
+    window.innerWidth >= 700 &&
+    window.innerWidth <= 1100 &&
+    window.innerHeight >= 900;
+  const isFourKStack = () => window.innerWidth >= 1800;
+  const isControlledStack = () => isTabletStack() || isFourKStack();
+
+  const setStackHeight = () => {
+    const stickyHeight = numbersSticky.getBoundingClientRect().height || window.innerHeight;
+    if (isControlledStack()) {
+      numbersStack.style.height = `${stickyHeight}px`;
       return;
     }
+    const travelPerCard = Math.max(480, stickyHeight * 0.78);
+    numbersStack.style.height = `${stickyHeight + travelPerCard * (stackCards.length - 1)}px`;
+  };
 
-    const stageTop = scene.stage.getBoundingClientRect().top;
-    const pinnedHeight =
-      scene.stage.firstElementChild?.offsetHeight || window.innerHeight;
-    const scrollDistance = Math.max(
-      scene.stage.offsetHeight - pinnedHeight,
-      1,
-    );
+  const updateNumbersStack = () => {
+    const sectionRect = numbersStack.getBoundingClientRect();
+    const viewportHeight = numbersSticky.getBoundingClientRect().height || window.innerHeight;
+    const scrollDistance = Math.max(1, numbersStack.offsetHeight - viewportHeight);
+    const progress = isControlledStack()
+      ? tabletProgress
+      : clamp(-sectionRect.top / scrollDistance);
+    const cardStyles = getComputedStyle(numbersStack);
+    const headerHeight = parseFloat(cardStyles.getPropertyValue("--stack-header-height")) || 76;
+    const stackGap = Math.min(44, headerHeight * 0.58);
+    const steps = stackCards.length - 1;
+    const entranceY = Math.max(500, viewportHeight * 0.78);
 
-    scene.progress = clamp(-stageTop / scrollDistance, 0, 1);
-    scene.stage.style.setProperty("--progress", scene.progress.toFixed(4));
+    stackCards.forEach((card, index) => {
+      if (index === 0) {
+        card.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
+        card.style.zIndex = "1";
+        return;
+      }
 
-    if (index === 0) {
-      document.documentElement.style.setProperty(
-        "--progress",
-        scene.progress.toFixed(4),
-      );
+      const localProgress = easeOut(clamp(progress * steps - (index - 1)));
+      const direction = index % 2 === 0 ? 1 : -1;
+      const x = mix(direction * 72, 0, localProgress);
+      const y = mix(entranceY + index * 55, index * stackGap, localProgress);
+      const rotation = mix(direction * 5.5, 0, localProgress);
+
+      card.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotation.toFixed(2)}deg)`;
+      card.style.zIndex = String(index + 1);
+    });
+
+    if (numbersMan) {
+      const manX = mix(-10, 12, progress);
+      numbersMan.style.transform = `translate3d(${manX.toFixed(2)}px, 0, 0)`;
     }
 
-    if (scene.duration && scene.video.readyState >= 2) {
-      const lastFrameTime = Math.max(scene.duration - 0.001, 0);
-      scene.targetTime = Math.min(
-        scene.duration * scene.progress,
-        lastFrameTime,
-      );
-      seekToTarget(scene);
-      window.clearTimeout(scene.settleTimer);
-      scene.settleTimer = window.setTimeout(() => settleSeek(scene), settleDelay);
-    }
-  });
+    stackTicking = false;
+  };
+
+  const requestStackUpdate = () => {
+    if (stackTicking) return;
+    stackTicking = true;
+    window.requestAnimationFrame(updateNumbersStack);
+  };
+
+  const refreshNumbersStack = () => {
+    setStackHeight();
+    requestStackUpdate();
+  };
+
+  const updateTabletProgress = (delta) => {
+    if (!isControlledStack()) return false;
+    const nextProgress = clamp(tabletProgress + delta / 1900);
+    if (nextProgress === tabletProgress) return false;
+    tabletProgress = nextProgress;
+    requestStackUpdate();
+    return true;
+  };
+
+  numbersStack.addEventListener("wheel", (event) => {
+    if (updateTabletProgress(event.deltaY)) event.preventDefault();
+  }, { passive: false });
+
+  numbersStack.addEventListener("touchstart", (event) => {
+    tabletTouchY = event.touches[0]?.clientY || 0;
+  }, { passive: true });
+
+  numbersStack.addEventListener("touchmove", (event) => {
+    const currentY = event.touches[0]?.clientY || tabletTouchY;
+    const delta = tabletTouchY - currentY;
+    tabletTouchY = currentY;
+    if (updateTabletProgress(delta * 2.4)) event.preventDefault();
+  }, { passive: false });
+
+  refreshNumbersStack();
+  window.addEventListener("scroll", requestStackUpdate, { passive: true });
+  window.addEventListener("resize", refreshNumbersStack);
 }
 
-function scheduleUpdate() {
-  if (animationFrame) {
-    return;
-  }
-
-  animationFrame = window.requestAnimationFrame(() => {
-    animationFrame = 0;
-    updateProgress();
-  });
-}
-
-window.addEventListener("scroll", scheduleUpdate, { passive: true });
-window.addEventListener("resize", scheduleUpdate, { passive: true });
-window.visualViewport?.addEventListener("resize", scheduleUpdate, {
-  passive: true,
-});
-
-[...document.querySelectorAll(".lead-form, .fourth-form")].forEach((form) => {
+document.querySelectorAll("[data-form]").forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (!form.reportValidity()) return;
 
-    const formData = new FormData(form);
-    const name = String(formData.get("name") || "").trim();
-    const phone = String(formData.get("phone") || "").trim();
-    const subject = encodeURIComponent("Заявка AUTOKONCEPT");
-    const body = encodeURIComponent(
-      [`Имя: ${name || "не указано"}`, `Телефон: ${phone || "не указан"}`].join(
-        "\n",
-      ),
-    );
-    const button = form.querySelector("button");
-
-    if (button) {
-      button.textContent = "Заявка готова";
-    }
-
-    window.location.href = `mailto:${leadEmail}?subject=${subject}&body=${body}`;
+    form.reset();
+    toast.classList.add("is-visible");
+    window.setTimeout(() => toast.classList.remove("is-visible"), 3500);
   });
 });
-
-updateProgress();
-revealSite();
