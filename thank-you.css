@@ -1,0 +1,102 @@
+.thank-you-page {
+  min-height: 100svh;
+  color: var(--color-text-light);
+  background: var(--color-ink);
+}
+
+.thank-you {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  padding: clamp(24px, 4vw, 62px) var(--page-gutter);
+  overflow: clip;
+  place-items: center;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.48), transparent 32% 68%, rgba(0, 0, 0, 0.48)),
+    radial-gradient(circle at 50% 58%, rgba(220, 238, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, var(--color-ink-soft), var(--color-ink) 72%);
+}
+
+.thank-you__glow {
+  position: absolute;
+  bottom: -22vw;
+  left: 50%;
+  width: min(84vw, 1050px);
+  aspect-ratio: 2.8;
+  border: 1px solid rgba(220, 238, 255, 0.5);
+  border-radius: 50%;
+  box-shadow:
+    0 0 45px rgba(220, 238, 255, 0.16),
+    inset 0 0 80px rgba(220, 238, 255, 0.05);
+  transform: translateX(-50%);
+}
+
+.thank-you__header {
+  position: absolute;
+  top: clamp(24px, 4vw, 62px);
+  left: var(--page-gutter);
+}
+
+.thank-you__content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 760px);
+  text-align: center;
+}
+
+.thank-you__eyebrow {
+  color: var(--color-accent);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.thank-you h1 {
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 8vw, 108px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.thank-you p {
+  max-width: 580px;
+  margin: 28px auto 0;
+  color: rgba(246, 247, 247, 0.68);
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+
+.thank-you__content > a {
+  display: inline-flex;
+  min-width: 210px;
+  min-height: 52px;
+  margin-top: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.thank-you__content > a:hover,
+.thank-you__content > a:focus-visible {
+  color: var(--color-ink);
+  background: var(--color-accent);
+}
+
+@media (max-width: 680px) {
+  .thank-you__header .brand__wordmark {
+    display: block;
+  }
+
+  .thank-you__glow {
+    bottom: -8vw;
+    width: 130vw;
+  }
+}
