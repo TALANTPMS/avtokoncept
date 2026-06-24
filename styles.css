@@ -4846,7 +4846,6 @@ body.is-ready .preloader__content {
 
 /* Единая типографика главных заголовков всех невидеоэкранов. */
 .second-screen h2,
-.fourth-screen__lead h2,
 .offer-scene__header h2,
 .fleet-scene__header h2,
 .metrics-scene__header h2,
@@ -4857,6 +4856,14 @@ body.is-ready .preloader__content {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.05em;
+}
+
+.fourth-screen__lead h2 {
+  font-family: var(--font-display);
+  font-size: var(--site-heading-size);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
 }
 
 @media (min-width: 701px) and (max-width: 1100px) {
