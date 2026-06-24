@@ -12,7 +12,7 @@ return [
     'project_name' => getenv('AUTOKONCEPT_PROJECT_NAME') ?: 'AUTOKONCEPT',
 
     // При необходимости адрес можно переопределить переменной окружения.
-    'to' => getenv('AUTOKONCEPT_MAIL_TO') ?: 'info@autokoncept.ru',
+    'to' => getenv('AUTOKONCEPT_MAIL_TO') ?: 'Savelprz2008@gmail.com',
     'from' => getenv('AUTOKONCEPT_MAIL_FROM') ?: $defaultFrom,
     'from_name' => getenv('AUTOKONCEPT_MAIL_FROM_NAME') ?: 'Заявка AUTOKONCEPT',
 
