@@ -4,12 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#080808" />
+    <meta name="robots" content="index, follow" />
     <meta
       name="description"
       content="Франшиза AUTOKONCEPT по аренде автомобилей для бизнеса. Получите презентацию и финансовую модель проекта."
     />
+    <link rel="canonical" href="https://autokoncept.dalidam.live/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content="https://autokoncept.dalidam.live/" />
     <meta
       property="og:title"
       content="AUTOKONCEPT — франшиза аренды автомобилей для бизнеса"
@@ -18,11 +21,34 @@
       property="og:description"
       content="Узнайте, сколько можно зарабатывать на аренде автомобилей для бизнеса в вашем городе."
     />
+    <meta
+      property="og:image"
+      content="https://autokoncept.dalidam.live/assets/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://autokoncept.dalidam.live/assets/og-image.jpg"
+    />
     <title>AUTOKONCEPT - Франшиза компании по аренде автомобилей для бизнеса</title>
     <script>
       document.documentElement.classList.add("js");
     </script>
-    <link rel="stylesheet" href="./styles.css?v=69" />
+    <link rel="icon" href="./assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+    <link
+      rel="preload"
+      as="image"
+      href="./assets/fleet-largus.webp?v=2"
+      fetchpriority="high"
+    />
+    <link rel="preload" as="image" href="./assets/fleet-partner.webp?v=2" />
+    <link rel="preload" as="image" href="./assets/fleet-transit.webp?v=2" />
+    <link rel="preload" as="image" href="./assets/fleet-gazelle.webp?v=2" />
+    <link rel="preload" as="image" href="./assets/fleet-boxer.webp?v=2" />
+    <link rel="stylesheet" href="./styles.css?v=70" />
   </head>
   <body class="is-loading">
     <a class="skip-link" href="#main-content">Перейти к содержанию</a>
@@ -98,15 +124,16 @@
             </video>
             <img
               class="hero-static"
-              src="./assets/minivan-turntable-static.png"
+              src="./assets/minivan-turntable-static.webp?v=2"
               alt="Чёрный минивэн AUTOKONCEPT на подиуме"
+              width="1280"
+              height="853"
               loading="eager"
               decoding="async"
             />
 
             <div class="hero__fallback" data-video-fallback aria-hidden="true">
               <div class="hero__platform"></div>
-              <p>Добавьте видео в<br /><strong>assets/minivan-turntable.mp4</strong></p>
             </div>
           </div>
 
@@ -212,8 +239,10 @@
           </video>
           <img
             class="third-static"
-            src="./assets/minivan-driving-static.png"
+            src="./assets/minivan-driving-static.webp?v=2"
             alt="Чёрный минивэн AUTOKONCEPT в движении"
+            width="1280"
+            height="793"
             loading="lazy"
             decoding="async"
           />
@@ -522,9 +551,12 @@
               <div class="fleet-slide__visual">
                 <span class="fleet-slide__halo" aria-hidden="true"></span>
                 <img
-                  src="./assets/fleet-largus.webp"
+                  src="./assets/fleet-largus.webp?v=2"
                   alt="Lada Largus Фургон"
-                  loading="lazy"
+                  width="1280"
+                  height="853"
+                  loading="eager"
+                  fetchpriority="high"
                   decoding="async"
                 />
               </div>
@@ -540,9 +572,11 @@
               <div class="fleet-slide__visual">
                 <span class="fleet-slide__halo" aria-hidden="true"></span>
                 <img
-                  src="./assets/fleet-partner.webp"
+                  src="./assets/fleet-partner.webp?v=2"
                   alt="Peugeot Partner Фургон"
-                  loading="lazy"
+                  width="1280"
+                  height="853"
+                  loading="eager"
                   decoding="async"
                 />
               </div>
@@ -558,9 +592,11 @@
               <div class="fleet-slide__visual">
                 <span class="fleet-slide__halo" aria-hidden="true"></span>
                 <img
-                  src="./assets/fleet-transit.webp"
+                  src="./assets/fleet-transit.webp?v=2"
                   alt="Ford Transit Фургон"
-                  loading="lazy"
+                  width="1280"
+                  height="853"
+                  loading="eager"
                   decoding="async"
                 />
               </div>
@@ -576,9 +612,11 @@
               <div class="fleet-slide__visual">
                 <span class="fleet-slide__halo" aria-hidden="true"></span>
                 <img
-                  src="./assets/fleet-gazelle.webp"
+                  src="./assets/fleet-gazelle.webp?v=2"
                   alt="Gazelle Next"
-                  loading="lazy"
+                  width="1280"
+                  height="853"
+                  loading="eager"
                   decoding="async"
                 />
               </div>
@@ -594,9 +632,11 @@
               <div class="fleet-slide__visual">
                 <span class="fleet-slide__halo" aria-hidden="true"></span>
                 <img
-                  src="./assets/fleet-boxer.webp"
+                  src="./assets/fleet-boxer.webp?v=2"
                   alt="Peugeot Boxer Фургон"
-                  loading="lazy"
+                  width="1280"
+                  height="853"
+                  loading="eager"
                   decoding="async"
                 />
               </div>
@@ -805,8 +845,10 @@
           <div class="city-check__road-line"></div>
           <img
             class="city-check__moving-car"
-            src="./assets/final-van-drive.png"
+            src="./assets/final-van-drive.webp?v=2"
             alt=""
+            width="1280"
+            height="494"
             loading="lazy"
             decoding="async"
           />
@@ -1227,10 +1269,11 @@
 
     <noscript>
       <div class="noscript-note">
-        Для управления видео прокруткой и отправки заявки включите JavaScript.
+        Основной контент доступен без JavaScript. Включите JavaScript для
+        плавных анимаций и подсказок при заполнении форм.
       </div>
     </noscript>
 
-    <script src="./script.js?v=47"></script>
+    <script src="./script.js?v=48"></script>
   </body>
 </html>

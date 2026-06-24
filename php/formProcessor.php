@@ -9,13 +9,37 @@ require __DIR__ . '/PHPMailer/src/Exception.php';
 require __DIR__ . '/PHPMailer/src/PHPMailer.php';
 require __DIR__ . '/PHPMailer/src/SMTP.php';
 
-header('Content-Type: application/json; charset=utf-8');
+$isAjax = strtolower((string) ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '')) === 'xmlhttprequest';
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 
 function respond(int $status, bool $success, string $message): void
 {
+    global $isAjax;
+
     http_response_code($status);
+
+    if (!$isAjax) {
+        if ($success) {
+            header('Location: ../thank-you.html', true, 303);
+            exit;
+        }
+
+        header('Content-Type: text/html; charset=utf-8');
+        $safeMessage = escape($message);
+        echo '<!doctype html><html lang="ru"><head><meta charset="UTF-8">'
+            . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+            . '<title>Заявка не отправлена — AUTOKONCEPT</title>'
+            . '<style>body{margin:0;min-height:100vh;display:grid;place-items:center;'
+            . 'padding:24px;background:#07090d;color:#f6f7f7;font-family:Arial,sans-serif}'
+            . 'main{max-width:560px}a{color:#dceeff}</style></head><body><main>'
+            . '<h1>Заявка не отправлена</h1><p>' . $safeMessage . '</p>'
+            . '<p><a href="../index.html#contact">Вернуться к форме</a></p>'
+            . '</main></body></html>';
+        exit;
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(
         ['success' => $success, 'message' => $message],
         JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES

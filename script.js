@@ -45,6 +45,17 @@ function waitForMedia(element) {
   return Promise.resolve();
 }
 
+function prewarmFleetImages() {
+  document.querySelectorAll(".fleet-slide img").forEach((image) => {
+    const source = image.currentSrc || image.src;
+    if (!source) return;
+
+    const preloadImage = new Image();
+    preloadImage.decoding = "async";
+    preloadImage.src = source;
+  });
+}
+
 async function revealSite() {
   const media = [...document.querySelectorAll("img, video")];
   const fontsReady = document.fonts?.ready || Promise.resolve();
@@ -622,5 +633,6 @@ window.addEventListener("orientationchange", scheduleResize, { passive: true });
 
 preventHangingPrepositions();
 setupReveals();
+prewarmFleetImages();
 scheduleUpdate();
 revealSite();

@@ -53,7 +53,7 @@ body {
   touch-action: pan-y pinch-zoom;
 }
 
-body.is-loading,
+.js body.is-loading,
 body.is-modal-open {
   overflow: hidden;
 }
